@@ -5,7 +5,7 @@ import json
 import os
 import threading
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 
 _translations = {}
 _default_lang = 'en'
