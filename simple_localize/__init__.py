@@ -5,6 +5,8 @@ import json
 import os
 import threading
 
+__version__ = '1.0.0'
+
 _translations = {}
 _default_lang = 'en'
 _translations_file = None
@@ -30,9 +32,7 @@ def _detect_system_language():
 
 def _load_translations(translations_file):
     try:
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        translations_path = os.path.join(script_dir, translations_file)
-        with open(translations_path, 'r', encoding='utf-8') as f:
+        with open(translations_file, 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
         print(f"Warning: Translations file '{translations_file}' not found.")
@@ -97,7 +97,7 @@ def add_translations(key, translations_dict):
     if not _translations_file:
         raise ValueError("Localizer not initialized. Call init_localizer('your_file.json') first.")
     with _lock:
-        _translations[key] = translations_dict
+        _translations[key] = {k.lower(): v for k, v in translations_dict.items()}
 
 def get_available_languages():
     if not _translations_file:
