@@ -48,15 +48,15 @@ def main():
 
     # STEP 4: Get text in specific language
     print("🌐 STEP 4: Get text in a specific language")
-    print(">>> localizer.get_text('welcome_message', 'FR')")
-    welcome_fr = localizer.get_text('welcome_message', 'FR')
+    print(">>> localizer.get_text('welcome_message', 'fr')")
+    welcome_fr = localizer.get_text('welcome_message', 'fr')
     print(f"'{welcome_fr}'")
     pause()
 
     # STEP 5: Change the current language
     print("🔄 STEP 5: Change current language")
-    print(">>> localizer.set_language('ES')")
-    localizer.set_language('ES')
+    print(">>> localizer.set_language('es')")
+    localizer.set_language('es')
     print(">>> localizer.get_text('welcome_message')")
     welcome_es = localizer.get_text('welcome_message')
     print(f"'{welcome_es}'")
@@ -65,14 +65,14 @@ def main():
     # STEP 6: Add translations at runtime
     print("➕ STEP 6: Add translations at runtime")
     print(">>> localizer.add_translations('user_greeting', {")
-    print("...     'EN': 'Hello {username}, you have {count} messages!',")
-    print("...     'FR': 'Bonjour {username}, vous avez {count} messages !',")
-    print("...     'ES': '¡Hola {username}, tienes {count} mensajes!'")
+    print("...     'en': 'Hello {username}, you have {count} messages!',")
+    print("...     'fr': 'Bonjour {username}, vous avez {count} messages !',")
+    print("...     'es': '¡Hola {username}, tienes {count} mensajes!'")
     print("... })")
     localizer.add_translations('user_greeting', {
-        'EN': 'Hello {username}, you have {count} messages!',
-        'FR': 'Bonjour {username}, vous avez {count} messages !',
-        'ES': '¡Hola {username}, tienes {count} mensajes!'
+        'en': 'Hello {username}, you have {count} messages!',
+        'fr': 'Bonjour {username}, vous avez {count} messages !',
+        'es': '¡Hola {username}, tienes {count} mensajes!'
     })
     pause()
 
@@ -97,7 +97,7 @@ def main():
     print("💡 set_language() applies per thread — each thread has its own language.")
     print()
     print(">>> # In each thread, set_language() persists for all get_text() calls:")
-    print(">>> localizer.set_language('FR')")
+    print(">>> localizer.set_language('fr')")
     print(">>> localizer.get_text('welcome_message')  # → French")
     print(">>> localizer.get_text('goodbye_message')  # → French too")
     print()
@@ -112,9 +112,9 @@ def main():
         ]
 
     threads = [
-        threading.Thread(target=request, args=('EN',)),
-        threading.Thread(target=request, args=('FR',)),
-        threading.Thread(target=request, args=('ES',)),
+        threading.Thread(target=request, args=('en',)),
+        threading.Thread(target=request, args=('fr',)),
+        threading.Thread(target=request, args=('es',)),
     ]
     for t in threads:
         t.start()

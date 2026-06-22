@@ -6,7 +6,7 @@ import os
 import threading
 
 _translations = {}
-_default_lang = 'EN'
+_default_lang = 'en'
 _translations_file = None
 _lock = threading.Lock()
 _thread_local = threading.local()  # per-thread current language
@@ -16,14 +16,14 @@ def _detect_system_language():
         for env_var in ['LANG', 'LC_ALL', 'LC_MESSAGES', 'LANGUAGE']:
             lang_value = os.environ.get(env_var, '')
             if lang_value and '_' in lang_value:
-                return lang_value.split('_')[0].upper()
+                return lang_value.split('_')[0].lower()
             elif len(lang_value) >= 2:
-                return lang_value[:2].upper()
+                return lang_value[:2].lower()
 
         # ponytail: no setlocale() — it has process-wide side effects
         system_locale = locale.getlocale()[0]
         if system_locale:
-            return system_locale[:2].upper()
+            return system_locale[:2].lower()
     except Exception:
         pass
     return _default_lang
@@ -50,7 +50,7 @@ def init_localizer(translations_file=None, default_lang='EN'):
 
     global _translations, _default_lang, _translations_file
     _translations_file = translations_file
-    _default_lang = default_lang.upper()
+    _default_lang = default_lang.lower()
     _thread_local.lang = _detect_system_language()
     _translations = _load_translations(translations_file)
     return True
@@ -59,7 +59,7 @@ def get_text(key, lang=None, **kwargs):
     if not _translations_file:
         raise ValueError("Localizer not initialized. Call init_localizer('your_file.json') first.")
 
-    lang = (lang or _get_current_lang()).upper()
+    lang = (lang or _get_current_lang()).lower()
 
     if key not in _translations:
         print(f"Warning: Translation key '{key}' not found. \nAvailable keys: {list(_translations.keys())}")
@@ -86,7 +86,7 @@ def set_language(lang):
     """Change language for the current thread only."""
     if not _translations_file:
         raise ValueError("Localizer not initialized. Call init_localizer('your_file.json') first.")
-    _thread_local.lang = lang.upper()
+    _thread_local.lang = lang.lower()
 
 def get_current_language():
     if not _translations_file:

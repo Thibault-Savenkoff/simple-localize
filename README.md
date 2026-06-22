@@ -34,10 +34,10 @@ print(simple_localize.get_text('your_text_key'))  # Auto-detects your language
 message = simple_localize.get_text('welcome_message')
 
 # Get text in specific language
-french_msg = simple_localize.get_text('welcome_message', 'FR')
+french_msg = simple_localize.get_text('welcome_message', 'fr')
 
 # Change current language
-simple_localize.set_language('ES')
+simple_localize.set_language('es')
 
 # Use variables in text
 greeting = simple_localize.get_text('greeting', name="Alice")
@@ -49,10 +49,10 @@ greeting = simple_localize.get_text('greeting', name="Alice")
 |----------|-------------|---------|
 | `init_localizer(file, lang)` | Initialize with JSON file | `init_localizer('my_translations.json')` |
 | `get_text(key, lang, **kwargs)` | Get translated text | `get_text('hello', name="John")` |
-| `set_language(lang)` | Change language for the current thread | `set_language('FR')` |
-| `get_current_language()` | Get current thread's language code | Returns `'EN'` |
-| `get_available_languages()` | List all available languages | Returns `['EN', 'FR', 'ES']` |
-| `add_translations(key, dict)` | Add/update a key at runtime (thread-safe) | `add_translations('hello', {'EN': 'Hi'})` |
+| `set_language(lang)` | Change language for the current thread | `set_language('fr')` |
+| `get_current_language()` | Get current thread's language code | Returns `'en'` |
+| `get_available_languages()` | List all available languages | Returns `['en', 'fr', 'es']` |
+| `add_translations(key, dict)` | Add/update a key at runtime (thread-safe) | `add_translations('hello', {'en': 'Hi'})` |
 
 ## Create Your Translation File
 
@@ -61,19 +61,19 @@ Create a JSON file with any name you like (`my_texts.json`, `lang.json`, `app_tr
 ```json
 {
   "app_title": {
-    "EN": "My Application",
-    "FR": "Mon Application",
-    "ES": "Mi Aplicación"
+    "en": "My Application",
+    "fr": "Mon Application",
+    "es": "Mi Aplicación"
   },
   "login_button": {
-    "EN": "Login",
-    "FR": "Connexion",
-    "ES": "Iniciar sesión"
+    "en": "Login",
+    "fr": "Connexion",
+    "es": "Iniciar sesión"
   },
   "welcome_user": {
-    "EN": "Welcome {username}!",
-    "FR": "Bienvenue {username} !",
-    "ES": "¡Bienvenido {username}!"
+    "en": "Welcome {username}!",
+    "fr": "Bienvenue {username} !",
+    "es": "¡Bienvenido {username}!"
   }
 }
 ```
@@ -94,12 +94,12 @@ print(simple_localize.get_text('welcome_user', username="John"))
 
 ```python
 # Thread A (e.g. a French user's request)
-simple_localize.set_language('FR')
+simple_localize.set_language('fr')
 simple_localize.get_text('welcome')  # → French
 simple_localize.get_text('goodbye')  # → French too
 
 # Thread B (e.g. a Spanish user's request), simultaneously
-simple_localize.set_language('ES')
+simple_localize.set_language('es')
 simple_localize.get_text('welcome')  # → Spanish, unaffected by Thread A
 ```
 
@@ -107,4 +107,4 @@ simple_localize.get_text('welcome')  # → Spanish, unaffected by Thread A
 
 ## Supported Languages
 
-Add any languages you need! Just use standard language codes like: EN, FR, ES, DE, IT, etc.
+Add any languages you need! Just use standard ISO 639-1 language codes like: en, fr, es, de, it, pt, etc.

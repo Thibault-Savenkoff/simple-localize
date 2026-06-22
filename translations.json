@@ -1,23 +1,23 @@
 {
   "welcome_message": {
-    "EN": "Welcome to Python",
-    "FR": "Bienvenue sur Python",
-    "ES": "Bienvenido a Python",
-    "DE": "Willkommen bei Python",
-    "IT": "Benvenuto in Python"
+    "en": "Welcome to Python",
+    "fr": "Bienvenue sur Python",
+    "es": "Bienvenido a Python",
+    "de": "Willkommen bei Python",
+    "it": "Benvenuto in Python"
   },
   "goodbye_message": {
-    "EN": "Goodbye!",
-    "FR": "Au revoir !",
-    "ES": "¡Adiós!",
-    "DE": "Auf Wiedersehen!",
-    "IT": "Arrivederci!"
+    "en": "Goodbye!",
+    "fr": "Au revoir !",
+    "es": "¡Adiós!",
+    "de": "Auf Wiedersehen!",
+    "it": "Arrivederci!"
   },
   "error_message": {
-    "EN": "An error occurred",
-    "FR": "Une erreur s'est produite",
-    "ES": "Ocurrió un error",
-    "DE": "Ein Fehler ist aufgetreten",
-    "IT": "Si è verificato un errore"
+    "en": "An error occurred",
+    "fr": "Une erreur s'est produite",
+    "es": "Ocurrió un error",
+    "de": "Ein Fehler ist aufgetreten",
+    "it": "Si è verificato un errore"
   }
 }
