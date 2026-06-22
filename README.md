@@ -2,44 +2,45 @@
 
 A simple and efficient Python module to easily add localization (multilingual support) to your projects.
 
+## Installation
+
+```bash
+pip install simple-localize
+```
+
 ## Quick Start
 
 ```python
-import localizer
+import simple_localize
 
-localizer.init_localizer('your_translations.json')  # Use your own JSON file
-print(localizer.get_text('your_text_key'))  # Auto-detects your language
+simple_localize.init_localizer('your_translations.json')
+print(simple_localize.get_text('your_text_key'))  # Auto-detects your language
 ```
 
 ## Features
 
 - 🌍 **Auto-detects** your system language
 - 📁 **JSON-based** translations (easy to edit)
-- 🔄 **Switch languages** on the fly
+- 🔄 **Switch languages** on the fly (per-thread safe)
 - 🎯 **Text formatting** with variables
 - ⚠️ **Missing key warnings** with helpful suggestions
 - ⚡ **Zero dependencies** - uses only Python standard library
-
-## Installation
-
-1. Copy `localizer.py` to your project
-2. Create your own JSON file with your translations (any name you want)
-3. That's it! No pip install needed.
+- 🔒 **Thread-safe** - safe to use in multi-threaded apps (Flask, FastAPI…)
 
 ## Basic Examples
 
 ```python
 # Get text in your system language
-message = localizer.get_text('welcome_message')
+message = simple_localize.get_text('welcome_message')
 
 # Get text in specific language
-french_msg = localizer.get_text('welcome_message', 'FR')
+french_msg = simple_localize.get_text('welcome_message', 'FR')
 
 # Change current language
-localizer.set_language('ES')
+simple_localize.set_language('ES')
 
 # Use variables in text
-greeting = localizer.get_text('greeting', name="Alice")
+greeting = simple_localize.get_text('greeting', name="Alice")
 ```
 
 ## API Reference
@@ -48,9 +49,10 @@ greeting = localizer.get_text('greeting', name="Alice")
 |----------|-------------|---------|
 | `init_localizer(file, lang)` | Initialize with JSON file | `init_localizer('my_translations.json')` |
 | `get_text(key, lang, **kwargs)` | Get translated text | `get_text('hello', name="John")` |
-| `set_language(lang)` | Change current language | `set_language('FR')` |
-| `get_current_language()` | Get current language code | Returns `'EN'` |
+| `set_language(lang)` | Change language for the current thread | `set_language('FR')` |
+| `get_current_language()` | Get current thread's language code | Returns `'EN'` |
 | `get_available_languages()` | List all available languages | Returns `['EN', 'FR', 'ES']` |
+| `add_translations(key, dict)` | Add/update a key at runtime (thread-safe) | `add_translations('hello', {'EN': 'Hi'})` |
 
 ## Create Your Translation File
 
@@ -79,22 +81,29 @@ Create a JSON file with any name you like (`my_texts.json`, `lang.json`, `app_tr
 Then use it in your code:
 
 ```python
-import localizer
+import simple_localize
 
-localizer.init_localizer('my_app_texts.json')  # Use any filename you want
-print(localizer.get_text('app_title'))
-print(localizer.get_text('welcome_user', username="John"))
+simple_localize.init_localizer('my_app_texts.json')
+print(simple_localize.get_text('app_title'))
+print(simple_localize.get_text('welcome_user', username="John"))
 ```
 
-## Interactive Tutorial
+## Thread Safety
 
-Want to see it in action? The included example shows all features:
+`set_language()` applies **per thread** — each thread can have its own active language without affecting others. This makes it safe to use in web servers where each request runs in its own thread:
 
-```bash
-python example_usage.py
+```python
+# Thread A (e.g. a French user's request)
+simple_localize.set_language('FR')
+simple_localize.get_text('welcome')  # → French
+simple_localize.get_text('goodbye')  # → French too
+
+# Thread B (e.g. a Spanish user's request), simultaneously
+simple_localize.set_language('ES')
+simple_localize.get_text('welcome')  # → Spanish, unaffected by Thread A
 ```
 
-**Note:** The `translations.json` file included with this module is only for the demo. Create your own JSON file with any name and your specific texts!
+`add_translations()` is also thread-safe for concurrent writes.
 
 ## Supported Languages
 
