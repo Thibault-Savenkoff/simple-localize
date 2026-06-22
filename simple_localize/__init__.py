@@ -44,7 +44,7 @@ def _load_translations(translations_file):
 def _get_current_lang():
     return getattr(_thread_local, 'lang', _default_lang)
 
-def init_localizer(translations_file=None, default_lang='EN'):
+def init_localizer(translations_file=None, default_lang='en'):
     if not translations_file:
         raise ValueError("You must specify a translations file. Example: init_localizer('my_translations.json')")
 
