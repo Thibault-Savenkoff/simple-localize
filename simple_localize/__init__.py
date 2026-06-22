@@ -5,7 +5,7 @@ import json
 import os
 import threading
 
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 
 _translations = {}
 _default_lang = 'en'
@@ -31,7 +31,8 @@ def _detect_system_language():
 def _load_translations(translations_file):
     try:
         with open(translations_file, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            data = json.load(f)
+        return {k: {lang.lower(): v for lang, v in langs.items()} for k, langs in data.items()}
     except FileNotFoundError:
         print(f"Warning: Translations file '{translations_file}' not found.")
         return {}
