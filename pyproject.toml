@@ -26,5 +26,6 @@ classifiers = [
 ]
 
 [project.urls]
+Homepage = "https://github.com/Thibault-Savenkoff/simple-localize"
+Issues = "https://github.com/Thibault-Savenkoff/simple-localize/issues"
 Repository = "https://github.com/Thibault-Savenkoff/simple-localize"
-"Bug Tracker" = "https://github.com/Thibault-Savenkoff/simple-localize/issues"
