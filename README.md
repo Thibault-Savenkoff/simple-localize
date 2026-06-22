@@ -107,4 +107,20 @@ simple_localize.get_text('welcome')  # → Spanish, unaffected by Thread A
 
 ## Supported Languages
 
-Add any languages you need! Just use standard ISO 639-1 language codes like: en, fr, es, de, it, pt, etc.
+Add any languages you need! Use standard ISO 639-1 codes (`en`, `fr`, `pt`…) or regional variants (`pt_br`, `pt_pt`, `en_us`…).
+
+The fallback chain for a `pt_br` user:
+1. `pt_br` — exact match
+2. `pt` — language fallback
+3. default language (usually `en`)
+
+```json
+{
+  "hello": {
+    "pt_br": "Olá (Brasil)",
+    "pt_pt": "Olá (Portugal)",
+    "pt": "Olá",
+    "en": "Hello"
+  }
+}
+```

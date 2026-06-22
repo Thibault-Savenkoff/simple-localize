@@ -11,17 +11,8 @@ def main():
     print("🌍 SIMPLE LOCALIZE - STEP BY STEP GUIDE")
     print("=" * 50)
 
-    # STEP 0: Create the JSON file
-    print("\n📁 STEP 0: Create your translations JSON file")
-    print('  {')
-    print('    "welcome": {"en": "Welcome!", "fr": "Bienvenue!", "es": "¡Bienvenido!"},')
-    print('    "greeting": {"en": "Hello {name}!", "fr": "Bonjour {name} !", "es": "¡Hola {name}!"}')
-    print('  }')
-    print("💡 Use any filename you want (e.g. 'my_texts.json', 'lang.json'…)")
-    pause()
-
     # STEP 1: Import and initialize
-    print("📋 STEP 1: Import and initialize the localizer")
+    print("\n📋 STEP 1: Import and initialize the localizer")
     print(">>> import simple_localize")
     print(">>> simple_localize.init_localizer('translations.json')")
     localizer.init_localizer('translations.json')
@@ -84,16 +75,36 @@ def main():
     print("💡 Use {parameter} in your translations for dynamic content!")
     pause()
 
-    # STEP 8: What happens with missing keys
-    print("⚠️  STEP 8: What happens with non-existent keys")
+    # STEP 8: Regional language variants
+    print("🗺️  STEP 8: Regional language variants (e.g. pt_br vs pt_pt)")
+    localizer.add_translations('hello', {
+        'pt_br': 'Olá (Brasil)',
+        'pt_pt': 'Olá (Portugal)',
+        'pt': 'Olá',
+        'en': 'Hello',
+    })
+    print(">>> simple_localize.set_language('pt_br')")
+    localizer.set_language('pt_br')
+    print(f"simple_localize.get_text('hello') → '{localizer.get_text('hello')}'")
+    print(">>> simple_localize.set_language('pt_pt')")
+    localizer.set_language('pt_pt')
+    print(f"simple_localize.get_text('hello') → '{localizer.get_text('hello')}'")
+    print(">>> simple_localize.set_language('pt')  # generic fallback")
+    localizer.set_language('pt')
+    print(f"simple_localize.get_text('hello') → '{localizer.get_text('hello')}'")
+    print("💡 Fallback chain: pt_br → pt → en")
+    pause()
+
+    # STEP 9: What happens with missing keys
+    print("⚠️  STEP 9: What happens with non-existent keys")
     print(">>> simple_localize.get_text('this_key_does_not_exist')")
     missing = localizer.get_text('this_key_does_not_exist')
     print(f"'{missing}'")
     print("💡 Non-existent keys return the key name and show a warning!")
     pause()
 
-    # STEP 9: Thread safety — each thread has its own language
-    print("🔒 STEP 9: Thread safety")
+    # STEP 10: Thread safety — each thread has its own language
+    print("🔒 STEP 10: Thread safety")
     print("💡 set_language() applies per thread — each thread has its own language.")
     print()
     print(">>> # In each thread, set_language() persists for all get_text() calls:")
@@ -125,6 +136,15 @@ def main():
         print(f"  [{lang}] {texts[0]} / {texts[1]}")
     print(f"Main thread language after:  '{localizer.get_current_language()}'")
     print("💡 set_language() persists for all calls in the thread, and doesn't affect other threads!")
+    pause()
+
+    # STEP 11: Create your own JSON file
+    print("📁 STEP 11: Create your own translations JSON file")
+    print('  {')
+    print('    "welcome": {"en": "Welcome!", "fr": "Bienvenue!", "es": "¡Bienvenido!"},')
+    print('    "greeting": {"en": "Hello {name}!", "fr": "Bonjour {name} !", "es": "¡Hola {name}!"}')
+    print('  }')
+    print("💡 Use any filename you want (e.g. 'my_texts.json', 'lang.json'…)")
 
     print("\n✅ That's it! You now know how to use the localizer!")
 

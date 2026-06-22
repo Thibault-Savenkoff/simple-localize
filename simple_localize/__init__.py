@@ -16,16 +16,14 @@ _thread_local = threading.local()  # per-thread current language
 def _detect_system_language():
     try:
         for env_var in ['LANG', 'LC_ALL', 'LC_MESSAGES', 'LANGUAGE']:
-            lang_value = os.environ.get(env_var, '').split(':')[0]  # LANGUAGE can be colon-separated
-            if lang_value and '_' in lang_value:
-                return lang_value.split('_')[0].lower()
-            elif len(lang_value) >= 2:
-                return lang_value[:2].lower()
+            lang_value = os.environ.get(env_var, '').split(':')[0].split('.')[0]  # e.g. pt_BR.UTF-8 → pt_BR
+            if len(lang_value) >= 2:
+                return lang_value.lower()  # e.g. 'pt_br', 'en', 'fr'
 
         # ponytail: no setlocale() — it has process-wide side effects
         system_locale = locale.getlocale()[0]
         if system_locale:
-            return system_locale[:2].lower()
+            return system_locale.lower()  # e.g. 'pt_br'
     except Exception:
         pass
     return _default_lang
@@ -66,8 +64,11 @@ def get_text(key, lang=None, **kwargs):
         return key
 
     translations_for_key = _translations[key]
+    lang_base = lang.split('_')[0]  # 'pt_br' → 'pt'
     if lang in translations_for_key:
         text = translations_for_key[lang]
+    elif lang_base in translations_for_key:
+        text = translations_for_key[lang_base]
     elif _default_lang in translations_for_key:
         text = translations_for_key[_default_lang]
     elif translations_for_key:
